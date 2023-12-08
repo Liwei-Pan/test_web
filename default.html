@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cookie Manager</title>
+</head>
+<body>
+    <label for="textInput">Enter text:</label>
+    <input type="text" id="textInput">
+    <button onclick="setCookie()">Convert Text to Cookie</button><br><br>
+    
+    <button onclick="displayCookie()">Display Cookie</button><br><br>
+
+    <div id="cookieDisplay"></div>
+
+    <button onclick="clearCookie()">Clear Cookie</button><br><br>
+
+    <script>
+        function setCookie() {
+            var userInput = document.getElementById("textInput").value;
+            var expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 1); // Set expiration date for one day ahead
+            document.cookie = "userInputCookie=" + userInput + "; expires=" + expirationDate.toUTCString();
+            document.getElementById("cookieDisplay").innerText = "Text converted to Cookie!";
+        }
+
+        function displayCookie() {
+            var cookies = document.cookie.split(';');
+            var cookieValue = "";
+            cookies.forEach(function(cookie) {
+                if (cookie.trim().startsWith("userInputCookie=")) {
+                    cookieValue = cookie.split('=')[1];
+                }
+            });
+            if (cookieValue !== "") {
+                document.getElementById("cookieDisplay").innerText = "Current Cookie value: " + cookieValue;
+            } else {
+                document.getElementById("cookieDisplay").innerText = "No Cookie set!";
+            }
+        }
+
+        function clearCookie() {
+            document.cookie = "userInputCookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.getElementById("cookieDisplay").innerText = "Cookie cleared!";
+        }
+    </script>
+</body>
+</html>
